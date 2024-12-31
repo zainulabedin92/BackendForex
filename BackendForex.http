@@ -1,0 +1,6 @@
+@BackendForex_HostAddress = http://localhost:5007
+
+//GET {{BackendForex_HostAddress}}/weatherforecast/
+//Accept: application/json
+
+###
