@@ -83,8 +83,8 @@ namespace BackendForex.Migrations
 
                     b.Property<string>("UserType")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("Verify")
                         .HasColumnType("bit");
@@ -92,6 +92,46 @@ namespace BackendForex.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("BackendForex.Entities.Wallets", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("accountNo")
+                        .IsRequired()
+                        .HasMaxLength(22)
+                        .HasColumnType("nvarchar(22)");
+
+                    b.Property<double>("balance")
+                        .HasMaxLength(200)
+                        .HasColumnType("float");
+
+                    b.Property<string>("currencySign")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("userId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Wallets");
                 });
 #pragma warning restore 612, 618
         }

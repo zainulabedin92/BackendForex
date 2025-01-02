@@ -44,8 +44,7 @@
 
         public string ProfileImage { get; set; } // Store image URL or path
 
-        [Required]
-        [MaxLength(20)]
+        [MaxLength(200)]
         public string UserType { get; set; } // Example: "Admin", "User", etc.
 
         public DateTime CreatedDate { get; set; }

@@ -40,16 +40,17 @@ namespace BackendForex.Controllers
             return Ok(user);
         }
 
-          /*[HttpPost]
-            public async Task<IActionResult> AddUser(UsersDTOModel usersDTOModel)
+          [HttpPost("CreateUser")]
+            public async Task<IActionResult> CreateUser([FromBody] UsersDTOModel userDTOModel)
             {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-                 var user = await _context.Users.FindAsync(id);
-                 if (user is null)
-                     return NotFound("User Not Found");
+            var createUser = await _userservice.CreateUserAsync(userDTOModel);
+            if (createUser == null)
+                return NotFound("User Could not be created");
 
-                 return Ok(user)
-                return Ok("");
-            };*/
+            return Ok(createUser);
+            }
     }
 }

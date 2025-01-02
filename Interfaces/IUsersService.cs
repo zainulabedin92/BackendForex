@@ -1,4 +1,5 @@
 ﻿using BackendForex.DTO;
+using BackendForex.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendForex.Interfaces
@@ -7,5 +8,6 @@ namespace BackendForex.Interfaces
     {
         Task<List<UsersDTOModel>> GetAllUsers();
         Task<UsersDTOModel?> GetUserById(int id);
+        Task<Users> CreateUserAsync(UsersDTOModel usersDTOModel);
     }
 }

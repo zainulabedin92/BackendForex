@@ -11,5 +11,6 @@ namespace BackendForex.Data
         }
 
         public DbSet<Users> Users { get; set; }
+        public DbSet<Wallets> Wallets { get; set; }
     }
 }

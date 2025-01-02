@@ -31,7 +31,7 @@ namespace BackendForex.Services
                      PhoneNumber = user.PhoneNumber,
                      UserType = user.UserType,
                      StreetAddress = user.StreetAddress,
-                     ProfileImage = user.ProfileImage
+                     //ProfileImage = user.ProfileImage
                  }).ToListAsync();
         }
 
@@ -49,8 +49,32 @@ namespace BackendForex.Services
                     PhoneNumber = user.PhoneNumber,
                     UserType = user.UserType,
                     StreetAddress = user.StreetAddress,
-                    ProfileImage = user.ProfileImage
+                    //ProfileImage = user.ProfileImage
                 }).FirstOrDefaultAsync();
+        }
+
+        public async Task<Users> CreateUserAsync(UsersDTOModel usersDTOModel)
+        {
+            var newUser = new Users
+            {
+                FirstName = usersDTOModel.FirstName,
+                LastName = usersDTOModel.LastName,
+                Email = usersDTOModel.Email,
+                Password = usersDTOModel.Password,
+                Country = usersDTOModel.Country,
+                City = usersDTOModel.City,
+                StreetAddress = usersDTOModel.StreetAddress,
+                Verify = usersDTOModel.Verify,
+                PhoneNumber = usersDTOModel.PhoneNumber,
+                DateOfBirth = usersDTOModel.DateOfBirth,
+                //ProfileImage = usersDTOModel.ProfileImage,
+                UserType = usersDTOModel.UserType,
+                CreatedDate = DateTime.UtcNow,
+                UpdatedDate = DateTime.UtcNow
+            };
+            _context.Users.Add(newUser);
+            await _context.SaveChangesAsync();
+            return newUser;
         }
     }
 }

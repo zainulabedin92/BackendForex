@@ -14,7 +14,6 @@ namespace BackendForex.DTO
         public bool Verify { get; set; }
         public string PhoneNumber { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public string ProfileImage { get; set; } 
         public string UserType { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
