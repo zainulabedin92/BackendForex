@@ -9,6 +9,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<IWalletsService, WalletsService>();
 // Add services to the container.
 
 builder.Services.AddControllers();
