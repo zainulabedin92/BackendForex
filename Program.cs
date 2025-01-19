@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<IWalletsService, WalletsService>();
+builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 // Add services to the container.
 
 builder.Services.AddControllers();

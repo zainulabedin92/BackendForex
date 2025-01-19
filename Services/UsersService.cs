@@ -2,6 +2,7 @@
 using BackendForex.DTO;
 using BackendForex.Entities;
 using BackendForex.Interfaces;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,27 @@ namespace BackendForex.Services
         public UsersService(DataContext context)
         {
             _context = context;
+        }
+
+        public async Task<Users?> LoginUser(UserLoginModel userLogin)
+        {
+            // Find user by email
+            var user = await _context.Users
+                .Where(u => u.Email == userLogin.Email)
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            if (userLogin.Password != user.Password)
+            {
+                return null;
+            }
+
+            
+            return user;
         }
 
         public async Task<List<UsersDTOModel>> GetAllUsers()
@@ -76,5 +98,11 @@ namespace BackendForex.Services
             await _context.SaveChangesAsync();
             return newUser;
         }
+    }
+
+    public class UserLoginModel
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

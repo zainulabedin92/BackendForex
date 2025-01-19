@@ -26,6 +26,7 @@ namespace BackendForex.Controllers
             return Ok(response);
         }
 
+        [HttpPost("CreateWallet")]
         public async Task<IActionResult> CreateWallet([FromBody] WalletsDTOModel walletDTOModel)
         {
             if (!ModelState.IsValid)
@@ -33,7 +34,9 @@ namespace BackendForex.Controllers
                 return BadRequest(ModelState);
             }
 
-            var creteWallet = await _walletsService.CreateWallet();
+            var creteWallet = await _walletsService.CreateWallet(walletDTOModel);
+
+            return Ok(new { NewWallet = creteWallet });
         }
 
     }    

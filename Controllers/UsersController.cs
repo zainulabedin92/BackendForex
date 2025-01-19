@@ -3,23 +3,41 @@ using BackendForex.DTO;
 using BackendForex.Entities;
 using BackendForex.Interfaces;
 using BackendForex.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackendForex.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
         private readonly DataContext _context;
         private readonly IUsersService _userservice;
+        private readonly IJwtTokenGenerator _tokenGenerator;
 
-        public UsersController(DataContext context, IUsersService userService)
+        public UsersController(DataContext context, IUsersService userService, IJwtTokenGenerator tokenGenerator)
         {
             _context = context;
             _userservice = userService;
+            _tokenGenerator = tokenGenerator;
+        }
+
+        [HttpPost("LoginUser")]
+        public async Task<IActionResult> LoginUser([FromBody] UserLoginModel loginModel)
+        {
+            var user = await _userservice.LoginUser(loginModel);
+
+            if (user == null)
+            {
+                return Unauthorized(new { message = "Invalid email or password." });
+            }
+
+            var token = _tokenGenerator.GenerateToken(loginModel.Email);
+            return Ok(new { Token = token });
         }
 
         [HttpGet("GetAllUsers")]
@@ -40,8 +58,8 @@ namespace BackendForex.Controllers
             return Ok(user);
         }
 
-          [HttpPost("CreateUser")]
-            public async Task<IActionResult> CreateUser([FromBody] UsersDTOModel userDTOModel)
+        [HttpPost("CreateUser")]
+       public async Task<IActionResult> CreateUser([FromBody] UsersDTOModel userDTOModel)
             {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

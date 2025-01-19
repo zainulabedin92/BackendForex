@@ -16,6 +16,7 @@ namespace BackendForex.Services
             _context = context;
         }
 
+
         public async Task<List<WalletsGetModel>> GetAllWallets()
         {
             return await _context.Wallets

@@ -1,33 +1,25 @@
-﻿using BackendForex.Services;
+﻿using BackendForex.Data;
+using BackendForex.Interfaces;
+using BackendForex.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendForex.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly DataContext _dbContext;
         private readonly IConfiguration _configuration;
+        private readonly IUsersService _userServce;
 
-        public AuthController(IConfiguration configuration)
+        public AuthController(DataContext dbContext, IConfiguration configuration, IUsersService usersService)
         {
+            _dbContext = dbContext;
             _configuration = configuration;
+            _userServce = usersService;
         }
-        [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginModel model)
-        {
-            // Dummy user validation (replace with actual logic)
-            if (model.Username == "test" && model.Password == "password")
-            {
-                var tokenGenerator = new JwtTokenGenerator(
-                    _configuration["Jwt:Key"],
-                    _configuration["Jwt:Issuer"],
-                    _configuration["Jwt:Audience"]);
-
-                var token = tokenGenerator.GenerateToken(model.Username);
-                return Ok(new { Token = token });
-            }
-
-            return Unauthorized();
-        }
+        
     }
     public class LoginModel
     {
